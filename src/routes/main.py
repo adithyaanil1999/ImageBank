@@ -3,5 +3,4 @@ main = Blueprint('main', __name__)
 # print(main)
 @main.route('/')
 def index():
-
     return render_template('base.html')
