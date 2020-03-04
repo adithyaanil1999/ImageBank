@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %}ImageBank{% endblock %} {% block body_content %}
+<div class="splash_screen-cont">
+    <div class="loading-cont">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div class="login-cont">
+        <div class="login-box">
+            <div class="login-form-wrap">
+                <h1 class="login_title">
+                    Login
+                </h1>
+                <input class="login-inp" id="username" placeholder="Username" type="text">
+                <input class="login-inp" id="password" placeholder="Password" type="password">
+                <button id="login-btn">Login</button>
+                <span id="signup-button">Sign Up</span>
+                <div class="error-wrap"><span id="error-login"></span></div>
+                <div class="login-spinner-wrap">
+                    <div class="spinner">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-img">
+            <div>
+                <h1>Image Bank</h1>
+                <h2>Upload your images to your personal bank</h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

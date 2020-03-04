@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome</title>
-  </head>
-  <body>
-      <h1>JNEJNEJN</h1>
-  </body>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename='animate.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='index.js') }}">
+    </script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    {% block body_content %}{% endblock %}
+</body>
+
 </html>
