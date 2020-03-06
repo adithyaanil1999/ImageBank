@@ -34,14 +34,16 @@ window.onload = () => {
         signUpEmail.addEventListener('keyup', verifySignUp.bind(null));
         signUpPassword.addEventListener('keyup', verifySignUp.bind(null));
         signUpPasswordConfirm.addEventListener('keyup', verifySignUp.bind(null));
+        regBtn.addEventListener('click', handleSignUp.bind(null));
 
     }
 
     async function init() {
         var flag = await verify_login();
         if (flag) {
-            const splashBgUrl = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&auto=format&fit=crop&w=3310&q=80";
-            getSplashScreenBackground(splashBgUrl);
+            // const splashBgUrl = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&auto=format&fit=crop&w=3310&q=80";
+            // getSplashScreenBackground(splashBgUrl);
+            exitLoadingAnimationHandle();
             handleLogin();
         }
 
@@ -73,6 +75,10 @@ window.onload = () => {
     }
 
     function verifySignUp() {
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
         let error = document.querySelector('#error-signUp');
         if (signUpUsername.value === undefined || signUpUsername.value === "" ||
             signUpEmail.value === undefined || signUpEmail.value === "" ||
@@ -82,13 +88,44 @@ window.onload = () => {
             signUpPasswordConfirm.value === undefined || signUpPasswordConfirm.value === "") {
             error.innerText = "Fields must not be empty";
             regBtn.disabled = true;
+        } else if (!validateEmail(signUpEmail.value)) {
+            error.innerText = "Enter a valid email";
+            regBtn.disabled = true;
+        } else if (signUpPassword.value !== signUpPasswordConfirm.value) {
+            error.innerText = "Passwords do not match";
+            regBtn.disabled = true;
         } else {
             regBtn.disabled = false;
             error.innerText = "";
         }
-        // signUpEmail.addEventListener('keyup', verifySignUp.bind(null));
-        // signUpPassword.addEventListener('keyup', verifySignUp.bind(null));
-        // signUpPasswordConfirm.addEventListener('keyup', verifySignUp.bind(null));
+
+    }
+
+    async function handleSignUp() {
+        let error = document.querySelector('#error-signUp');
+        var username = signUpUsername.value;
+        var email = signUpEmail.value;
+        var password = signUpPasswordConfirm.value;
+        document.querySelector('.signUp-spinner').style.display = 'flex';
+        const res = await fetch('/reg', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                'username': username,
+                'password': password,
+                'email': email
+            })
+        })
+        if (res.ok) {
+            document.querySelector('.signUp-spinner').style.display = 'none';
+            const json_main = await res.json();
+            if (json_main.message === "registered") {
+                location.reload();
+            } else {
+                error.innerText = "Username Is Taken";
+            }
+        }
+
     }
 
     function handleSignUpAnimation() {

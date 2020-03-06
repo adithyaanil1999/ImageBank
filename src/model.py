@@ -5,8 +5,7 @@ class UserLogin(db.Model):
     user_id = db.Column(db.Integer,primary_key = True)
     user_name = db.Column(db.String(),unique = True)
     password = db.Column(db.String())
-    def __init__(self, password):
-        self.user_id = user_id
+    def __init__(self, user_name, password):
         self.user_name = user_name
         self.password = password
 
@@ -23,7 +22,7 @@ class LoginActivity(db.Model):
     user_name = db.Column(db.String(),db.ForeignKey("user_login.user_name", ondelete="CASCADE"))
     login_time = db.Column(db.DateTime())
 
-    def __init__(self, password):
+    def __init__(self, user_name):
         self.login_id = login_id
         self.user_name = user_name
         self.last_login = login_time
@@ -42,8 +41,7 @@ class UserInfo(db.Model):
     user_lang = db.Column(db.String());
     user_email = db.Column(db.String());
 
-    def __init__(self, password):
-        self.user_id = user_id
+    def __init__(self, user_name, user_lang, user_email):
         self.user_name = user_name
         self.user_lang = user_lang
         self.user_email = user_email
