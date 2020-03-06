@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% block title %}ImageBank{% endblock %} {% block body_content %}
+<script src="{{ url_for('static', filename='index.js') }}">
+</script>
 <div class="splash_screen-cont">
     <div class="loading-cont">
         <div class="spinner">
@@ -8,19 +10,76 @@
     </div>
     <div class="login-cont">
         <div class="login-box">
-            <div class="login-form-wrap">
-                <h1 class="login_title">
-                    Login
-                </h1>
-                <input class="login-inp" id="username" placeholder="Username" type="text">
-                <input class="login-inp" id="password" placeholder="Password" type="password">
-                <button id="login-btn">Login</button>
-                <span id="signup-button">Sign Up</span>
-                <div class="error-wrap"><span id="error-login"></span></div>
-                <div class="login-spinner-wrap">
-                    <div class="spinner">
-                        <div class="double-bounce1"></div>
-                        <div class="double-bounce2"></div>
+            <div class="login-box-wrap">
+                <div class="login-form-wrap">
+                    <h1 class="login_title">
+                        Login
+                    </h1>
+                    <input class="login-inp" id="username" placeholder="Username" type="text">
+                    <input class="login-inp" id="password" placeholder="Password" type="password">
+                    <button class="login-btn-style" id="login-btn">Login</button>
+                    <span id="signup-button">Sign Up</span>
+                    <span id="forgot-button">Forgot Password?</span>
+                    <div class="error-wrap"><span id="error-login"></span></div>
+                    <div class="login-spinner-wrap">
+                        <div class="spinner login-spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signup-form-wrap">
+                    <h1 class="SignUp_title">
+                        SignUp
+                    </h1>
+                    <input class="login-inp" id="username_req" placeholder="Username" type="text">
+                    <input class="login-inp" id="email" placeholder="Email" type="email">
+                    <input class="login-inp" id="password_req" placeholder="Password" type="password">
+                    <input class="login-inp" id="password_req_confirm" placeholder="Confirm Password" type="password">
+                    <button class="login-btn-style" id="signup-btn-conf">Register</button>
+                    <div class="error-wrap"><span id="error-signUp"></span></div>
+                    <div class="login-spinner-wrap signup-spinner-wrap">
+                        <div class="spinner login-spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                    </div>
+                    <div class="back-btn-wrap">
+                        <i id="back-signUp" class="fas fa-chevron-circle-left"></i>
+                    </div>
+                </div>
+                <div class="forgot-form-wrap">
+                    <h1 class="forgot_title">
+                        Forgot Password?
+                    </h1>
+                    <input class="login-inp" id="username_forgot" placeholder="Username" type="text">
+                    <button class="login-btn-style" id="forgot-btn-conf">Send Email</button>
+                    <div class="error-wrap"><span id="error-forgot"></span></div>
+                    <div class="login-spinner-wrap signup-spinner-wrap">
+                        <div class="spinner login-spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                    </div>
+                    <div class="back-btn-wrap">
+                        <i id="back-forgot" class="fas fa-chevron-circle-left"></i>
+                    </div>
+                </div>
+                <div class="email_code-form-wrap">
+                    <h1 class="forgot_title">
+                        Enter the Code sent to your Email:
+                    </h1>
+                    <input class="login-inp" id="code" placeholder="Code" type="text">
+                    <button class="login-btn-style" id="forgot-email-btn-conf">Confirm</button>
+                    <div class="error-wrap"><span id="error-forgot-email"></span></div>
+                    <div class="login-spinner-wrap signup-spinner-wrap">
+                        <div class="spinner login-spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                    </div>
+                    <div class="back-btn-wrap">
+                        <i id="back-forgot-2" class="fas fa-chevron-circle-left"></i>
                     </div>
                 </div>
             </div>
@@ -32,5 +91,6 @@
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}

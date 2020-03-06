@@ -12,6 +12,9 @@ flask-sqlalchemy = "*"
 flask-script = "*"
 flask-migrate = "*"
 psycopg2-binary = "*"
+pyjwt = "*"
+requests = "*"
+sqlitis = "*"
 
 [requires]
 python_version = "3.7"
