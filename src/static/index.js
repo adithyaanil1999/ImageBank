@@ -41,9 +41,9 @@ window.onload = () => {
     async function init() {
         var flag = await verify_login();
         if (flag) {
-            // const splashBgUrl = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&auto=format&fit=crop&w=3310&q=80";
-            // getSplashScreenBackground(splashBgUrl);
-            exitLoadingAnimationHandle();
+            const splashBgUrl = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&auto=format&fit=crop&w=3310&q=80";
+            getSplashScreenBackground(splashBgUrl);
+            // exitLoadingAnimationHandle();
             handleLogin();
         }
 
