@@ -38,8 +38,8 @@ class UserInfo(db.Model):
     __tablename__ = 'user_info'
     user_id = db.Column(db.Integer,primary_key = True)
     user_name = db.Column(db.String(),db.ForeignKey("user_login.user_name", ondelete="CASCADE"), unique = True)
-    user_lang = db.Column(db.String());
-    user_email = db.Column(db.String());
+    user_lang = db.Column(db.String())
+    user_email = db.Column(db.String())
 
     def __init__(self, user_name, user_lang, user_email):
         self.user_name = user_name

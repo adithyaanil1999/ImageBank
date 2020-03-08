@@ -16,6 +16,7 @@ psycopg2-binary = "*"
 pyjwt = "*"
 requests = "*"
 sqlitis = "*"
+flask-mail = "*"
 
 [requires]
 python_version = "3.7"
