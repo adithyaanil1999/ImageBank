@@ -97,7 +97,6 @@ def logout():
     values = request.get_json()
     decoded_token = decode_jwt(values['token'].encode('utf-8'))
     result = LoginActivity.query.order_by(LoginActivity.login_id.desc()).filter(LoginActivity.user_name == decoded_token).first()
-    print(result)
     result.logout_time = datetime.datetime.utcnow()
     db.session.commit()
     response = {'message': 'LoggedOut'}
@@ -180,3 +179,14 @@ def update_password():
     db.session.commit()
     response = {'message': 'Changed'}
     return jsonify(response),201
+
+
+@main.route('/updateToken', methods=['POST'])
+def update_token():
+    values = request.get_json()
+    decoded_token = decode_jwt(values['token'].encode('utf-8'))
+    encode_token = get_jwt(decoded_token)
+    cookie = {'jwtToken':encode_token.decode("utf-8")}
+    response_headers = [('Content-type', 'text/plain')]
+    response_headers.append(('Set-Cookie',cookie))
+    return jsonify(response_headers),201

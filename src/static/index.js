@@ -45,8 +45,10 @@ window.onload = () => {
 
     async function init() {
         var flag = await verify_login();
+        var w = window.screen.width * window.devicePixelRatio;
+        var h = window.screen.height * window.devicePixelRatio
         if (flag) {
-            const splashBgUrl = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&auto=format&fit=crop&w=3310&q=80";
+            const splashBgUrl = `https://source.unsplash.com/${h}x${w}/?nature,asthetic,city`;
             getSplashScreenBackground(splashBgUrl);
             // exitLoadingAnimationHandle();
             handleLogin();
@@ -330,6 +332,7 @@ window.onload = () => {
     }
 
     function getSplashScreenBackground(url) {
+        document.querySelector('.splash_screen-cont').style.background = `url(${url})`;
         var img = new Image();
         img.src = url;
         img.onload = () => {
