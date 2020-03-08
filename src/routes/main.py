@@ -33,7 +33,7 @@ mail_app.config.update(
     MAIL_USERNAME = 'noreplyimagebank@gmail.com',
     MAIL_PASSWORD = 'kwndwsdvocglyzeq'
     )
-mail_app.run(host='0.0.0.0', port=4000)
+mail_app.run()
 
 def get_jwt(username):
     try:
