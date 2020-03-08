@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, request, jsonify, redirect,
 from flask_mail import Message,Mail
 
 import random
+import requests
+import json
 from datetime import datetime
 from random import seed
 seed(datetime.now())
@@ -14,7 +16,7 @@ import hashlib
 
 from src.model import UserLogin,UserInfo,LoginActivity
 from src.extensions import db,mail
-# from src import app
+
 
 
 
@@ -23,17 +25,7 @@ main = Blueprint('main', __name__)
 email_code = dict()
 
 
-mail_app = Flask(__name__)
-mail_app.config.update(
-    DEBUG=True,
-    #EMAIL SETTINGS
-    MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT=587,
-    MAIL_USE_TLS=True,
-    MAIL_USERNAME = 'noreplyimagebank@gmail.com',
-    MAIL_PASSWORD = 'kwndwsdvocglyzeq'
-    )
-mail_app.run()
+
 
 def get_jwt(username):
     try:
@@ -65,14 +57,21 @@ def hash_pass(pass_word):
 def sendemail(email):
 
     code = random.randrange(1000, 9999)
-    with mail_app.app_context():
-        mail = Mail(mail_app)
-        msg = Message("Password Recovery",sender="noreplyimagebank@gmail.com",recipients=[email])
-        msg.html = "<h1>Your Recovery Code is: </h1><p>"+str(code)+"</p>"
-        mail.send(msg)
+    json_data = {
+    "code": str(code),
+    "email": str(email),
+    "secret": "adithya is too cool"
+    }
+
+
+    headers = {'content-type': 'application/json'}
+    r = requests.post(
+        'https://flask-emailer.herokuapp.com/send', headers=headers, data=json.dumps(json_data)
+    )
 
     return code
-    
+
+sendemail("adithyas.anil99@gmail.com") 
 @main.route('/')
 def index():
     return render_template('home.html')
