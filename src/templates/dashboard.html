@@ -1,2 +1,4 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block body_content %}
-<h1>HOMEPAGE</h1>{% endblock %}
+<script src="{{ url_for('static', filename='dash.js') }}">
+</script>
+<button id="logout">Logout</button> {% endblock %}

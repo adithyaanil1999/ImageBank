@@ -1,12 +1,9 @@
-from flask import Flask, Blueprint, render_template, request, jsonify, redirect, url_for 
-from flask_mail import Message,Mail
+from flask import Flask, Blueprint, render_template, request, jsonify
 
 import random
 import requests
 import json
-from datetime import datetime
 from random import seed
-seed(datetime.now())
 
 import requests
 import datetime
@@ -20,6 +17,7 @@ from src.extensions import db,mail
 
 
 
+seed(datetime.datetime.now())
 
 main = Blueprint('main', __name__)
 email_code = dict()
@@ -86,11 +84,24 @@ def login():
         return jsonify(response), 201
     else:
         encode_token = get_jwt(values['username'])
+        new_user = LoginActivity(user_name = values['username'])
+        db.session.add(new_user)
+        db.session.commit()
         cookie = {'jwtToken':encode_token.decode("utf-8")}
         response_headers = [('Content-type', 'text/plain')]
         response_headers.append(('Set-Cookie',cookie))
         return jsonify(response_headers),201
 
+@main.route('/logout', methods=['POST'])
+def logout():
+    values = request.get_json()
+    decoded_token = decode_jwt(values['token'].encode('utf-8'))
+    result = LoginActivity.query.order_by(LoginActivity.login_id.desc()).filter(LoginActivity.user_name == decoded_token).first()
+    print(result)
+    result.logout_time = datetime.datetime.utcnow()
+    db.session.commit()
+    response = {'message': 'LoggedOut'}
+    return jsonify(response), 201
 
 @main.route('/dashBoard')
 def dash():

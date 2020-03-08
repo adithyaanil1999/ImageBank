@@ -1,4 +1,5 @@
 from .extensions import db
+from datetime import datetime
 
 class UserLogin(db.Model):
     __tablename__ = 'user_login'
@@ -20,18 +21,19 @@ class LoginActivity(db.Model):
     __tablename__ = 'login_activity'
     login_id = db.Column(db.Integer,primary_key = True)
     user_name = db.Column(db.String(),db.ForeignKey("user_login.user_name", ondelete="CASCADE"))
-    login_time = db.Column(db.DateTime())
+    login_time = db.Column(db.DateTime(), default=datetime.now())
+    logout_time = db.Column(db.DateTime(),default=None)
 
     def __init__(self, user_name):
-        self.login_id = login_id
         self.user_name = user_name
-        self.last_login = login_time
+
 
     def serialize(self):
         return {
             'login_id': self.login_id,
             'user_name': self.user_name, 
-            'last_login': self.login_time
+            'login_time': self.login_time,
+            'logout_time': self.logout_time
         }
 
 class UserInfo(db.Model):

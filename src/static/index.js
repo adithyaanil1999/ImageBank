@@ -57,9 +57,7 @@ window.onload = () => {
     async function verify_login() {
         var checkToken = getCook('token');
         if (checkToken != "") {
-            console.log(document.cookie);
             let token = getCook('token');
-            console.log(token);
             const res = await fetch('/verifytoken', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -70,7 +68,6 @@ window.onload = () => {
             if (res.ok) {
                 const json_main = await res.json();
                 if (json_main.message === "Signature expired. Please log in again." || json_main.message === "Invalid token.") {
-                    console.log(json_main.message);
                     deleteCookies();
                 } else {
                     window.location = '/dashBoard';
