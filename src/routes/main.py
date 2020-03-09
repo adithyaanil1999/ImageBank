@@ -69,7 +69,6 @@ def sendemail(email):
 
     return code
 
-sendemail("adithyas.anil99@gmail.com") 
 @main.route('/')
 def index():
     return render_template('home.html')
@@ -147,6 +146,7 @@ def handle_username_verification():
    
 @main.route('/sendCode',methods=['POST'])
 def send_code():
+    print(email_code)
     values = request.get_json()
     result = UserInfo.query.filter(UserInfo.user_name == values['username']).first()
     email = result.user_email
@@ -166,7 +166,6 @@ def verify_code():
         response = {'message': 'verified'}
         return jsonify(response),201
     else:
-        print('verified')
         response = {'message': 'not_verfied'}
         return jsonify(response),201
 

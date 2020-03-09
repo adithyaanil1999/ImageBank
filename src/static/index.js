@@ -48,7 +48,8 @@ window.onload = () => {
         var w = window.screen.width * window.devicePixelRatio;
         var h = window.screen.height * window.devicePixelRatio
         if (flag) {
-            const splashBgUrl = `https://source.unsplash.com/${h}x${w}/?nature,asthetic,city`;
+            // const splashBgUrl = `https://source.unsplash.com/${h}x${w}/?nature,mountain,space`;
+            const splashBgUrl = 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80';
             getSplashScreenBackground(splashBgUrl);
             // exitLoadingAnimationHandle();
             handleLogin();
@@ -191,9 +192,9 @@ window.onload = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                'username': username,
-                'password': password,
-                'email': email
+                'username': username.trim(),
+                'password': password.trim(),
+                'email': email.trim()
             })
         })
         if (res.ok) {
@@ -259,6 +260,7 @@ window.onload = () => {
     }
 
     async function handleEmailAnimation() {
+        console.log('email sending');
         forgotEmailBtn.disabled = true;
         var username = getCook('username');
         document.querySelector('.email-spinner').style.display = 'block';
@@ -398,8 +400,8 @@ window.onload = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    'username': username.value,
-                    'password': password.value,
+                    'username': username.value.trim(),
+                    'password': password.value.trim(),
                 })
             })
             if (res.ok) {
