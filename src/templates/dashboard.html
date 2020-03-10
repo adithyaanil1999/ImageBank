@@ -1,5 +1,72 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block body_content %}
 <script src="{{ url_for('static', filename='dash.js') }}">
 </script>
-<span id="time"></span>
-<button id="logout">Logout</button> {% endblock %}
+<div class="dash-wrapper">
+    <div class="nav-wrapper">
+        <div class="logo-wrap">
+            <div class="logo-cont-outer">
+                <div class="logo-cont-inner">
+                    <i class="fas fa-camera-retro"></i>
+                </div>
+            </div>
+            <div class="logo-user-name-cont">
+                <h2 id="logo-username"></h2>
+            </div>
+        </div>
+        <div class="nav-main-wrap">
+            <div id="default-select" class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="far fa-images"></i><span class="nav-header" id="gallery-header">My Photos</span>
+                </div>
+            </div>
+            <div class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="fas fa-upload"></i><span class="nav-header" id="upload-header">Upload</span>
+                </div>
+            </div>
+            <div class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="fas fa-user-cog"></i><span class="nav-header" id="settings-header">Account Management</span>
+                </div>
+            </div>
+            <div class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="fas fa-chart-line"></i><span class="nav-header" id="loging-act-header">Login Activity</span>
+                </div>
+            </div>
+            <div class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="fas fa-history"></i><span class="nav-header" id="upload-act-header">Upload History</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="logout-wrap">
+            <div class="navitem-cont logout-btn-i-wrap unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav-header" id="logout-header">Logout</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dash-cont">
+        <div class="dash-items photos-cont"></div>
+        <div class="dash-items upload-cont"></div>
+        <div class="dash-items acc-man-cont"></div>
+        <div class="dash-items login-act-cont"></div>
+        <div class="dash-items upload-hist-cont"></div>
+    </div>
+</div>
+
+{% endblock %}

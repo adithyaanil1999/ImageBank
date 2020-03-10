@@ -31,6 +31,7 @@ def get_jwt(username):
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=15),
             'sub': username
         }
+        
         return jwt.encode(payload, 'adithya', algorithm='HS256')
     except Exception as e:
         return e
@@ -40,6 +41,7 @@ def decode_jwt(token):
         payload = jwt.decode(token, 'adithya',algorithm='HS256')
         return payload['sub']
     except jwt.ExpiredSignatureError:
+        print(datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5))
         return 'Signature expired. Please log in again.'
     except jwt.InvalidTokenError:
         return 'Invalid token.'
@@ -109,6 +111,7 @@ def dash():
 def token_verification():
     values = request.get_json()
     decoded_token = decode_jwt(values['token'].encode('utf-8'))
+    print(decoded_token)
     response = {'message': decoded_token}
     return jsonify(response),201
 
