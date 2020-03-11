@@ -27,11 +27,11 @@ email_code = dict()
 
 def get_jwt(username):
     try:
+        print(datetime.datetime.utcnow())
         payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=15),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=360),
             'sub': username
         }
-        
         return jwt.encode(payload, 'adithya', algorithm='HS256')
     except Exception as e:
         return e
@@ -41,7 +41,7 @@ def decode_jwt(token):
         payload = jwt.decode(token, 'adithya',algorithm='HS256')
         return payload['sub']
     except jwt.ExpiredSignatureError:
-        print(datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5))
+        # print(datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5))
         return 'Signature expired. Please log in again.'
     except jwt.InvalidTokenError:
         return 'Invalid token.'
@@ -111,7 +111,6 @@ def dash():
 def token_verification():
     values = request.get_json()
     decoded_token = decode_jwt(values['token'].encode('utf-8'))
-    print(decoded_token)
     response = {'message': decoded_token}
     return jsonify(response),201
 
@@ -155,7 +154,8 @@ def send_code():
     email = result.user_email
     recovery = sendemail(email)
     email_code[values['username']] = recovery
-    response = {'message': 'Sent'}
+    encode_token = get_jwt(values['username'])
+    response = {'message': 'Sent','token':encode_token.decode("utf-8")}
     return jsonify(response),201
 
 @main.route('/verifyCode',methods=['POST'])
@@ -176,7 +176,8 @@ def verify_code():
 def update_password():
     values = request.get_json()
     hashPass = hash_pass(values['password'])
-    result = UserLogin.query.filter(UserLogin.user_name == values['username']).first()
+    username = decode_jwt(values['token'].encode('utf-8'))
+    result = UserLogin.query.filter(UserLogin.user_name == username).first()
     result.password = hashPass
     db.session.commit()
     response = {'message': 'Changed'}
@@ -192,3 +193,36 @@ def update_token():
     response_headers = [('Content-type', 'text/plain')]
     response_headers.append(('Set-Cookie',cookie))
     return jsonify(response_headers),201
+
+@main.route('/verifyOldPass',methods=['POST'])
+def verify_password():
+    values = request.get_json()
+    hashPass = hash_pass(values['password'])
+    username = decode_jwt(values['token'].encode('utf-8'))
+    result = UserLogin.query.filter(UserLogin.user_name == username).first()
+    if result.password == hashPass:
+        response = {'message': 'PassMatch'}
+    else:
+        response = {'message': 'PassDontMatch'}
+    return jsonify(response),201
+
+@main.route('/getLang',methods=['POST'])
+def ret_lang():
+    values = request.get_json()
+    username = decode_jwt(values['token'].encode('utf-8'))
+    result = UserInfo.query.filter(UserInfo.user_name == username).first()
+    response = {'message': result.user_lang}
+    return jsonify(response),201
+
+@main.route('/updateLang',methods=['POST'])
+def update_lang():
+    values = request.get_json()
+    username = decode_jwt(values['token'].encode('utf-8'))
+    lang = values['lang']
+    result = UserInfo.query.filter(UserInfo.user_name == username).first()
+    result.user_lang = lang 
+    db.session.commit()
+    response = {'message': 'LangChanged'}
+    return jsonify(response),201
+
+    

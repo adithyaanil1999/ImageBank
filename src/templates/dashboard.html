@@ -14,39 +14,39 @@
             </div>
         </div>
         <div class="nav-main-wrap">
+            <div class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="far fa-images"></i><span class="nav-header" id="gallery-header"></span>
+                </div>
+            </div>
+            <div class="navitem-cont unfocus-nav-item">
+                <div class="hightlight-container"></div>
+                <div class="selected-container"></div>
+                <div class="nav-item-i-wrap">
+                    <i class="fas fa-upload"></i><span class="nav-header" id="upload-header"></span>
+                </div>
+            </div>
             <div id="default-select" class="navitem-cont unfocus-nav-item">
                 <div class="hightlight-container"></div>
                 <div class="selected-container"></div>
                 <div class="nav-item-i-wrap">
-                    <i class="far fa-images"></i><span class="nav-header" id="gallery-header">My Photos</span>
+                    <i class="fas fa-user-cog"></i><span class="nav-header" id="settings-header"></span>
                 </div>
             </div>
             <div class="navitem-cont unfocus-nav-item">
                 <div class="hightlight-container"></div>
                 <div class="selected-container"></div>
                 <div class="nav-item-i-wrap">
-                    <i class="fas fa-upload"></i><span class="nav-header" id="upload-header">Upload</span>
+                    <i class="fas fa-chart-line"></i><span class="nav-header" id="loging-act-header"></span>
                 </div>
             </div>
             <div class="navitem-cont unfocus-nav-item">
                 <div class="hightlight-container"></div>
                 <div class="selected-container"></div>
                 <div class="nav-item-i-wrap">
-                    <i class="fas fa-user-cog"></i><span class="nav-header" id="settings-header">Account Management</span>
-                </div>
-            </div>
-            <div class="navitem-cont unfocus-nav-item">
-                <div class="hightlight-container"></div>
-                <div class="selected-container"></div>
-                <div class="nav-item-i-wrap">
-                    <i class="fas fa-chart-line"></i><span class="nav-header" id="loging-act-header">Login Activity</span>
-                </div>
-            </div>
-            <div class="navitem-cont unfocus-nav-item">
-                <div class="hightlight-container"></div>
-                <div class="selected-container"></div>
-                <div class="nav-item-i-wrap">
-                    <i class="fas fa-history"></i><span class="nav-header" id="upload-act-header">Upload History</span>
+                    <i class="fas fa-history"></i><span class="nav-header" id="upload-act-header"></span>
                 </div>
             </div>
 
@@ -61,11 +61,72 @@
         </div>
     </div>
     <div class="dash-cont">
-        <div class="dash-items photos-cont"></div>
-        <div class="dash-items upload-cont"></div>
-        <div class="dash-items acc-man-cont"></div>
-        <div class="dash-items login-act-cont"></div>
-        <div class="dash-items upload-hist-cont"></div>
+        <div class="dash-items photos-cont animated fadeIn faster"></div>
+        <div class="dash-items upload-cont animated fadeIn faster"></div>
+        <div class="dash-items acc-man-cont animated fadeIn faster">
+
+            <div class="acc-man-left-cont">
+                <div class="dash-items-cont-header-wrap">
+                    <span id="header-acc-man"></span>
+                </div>
+                <div class="acc-man-options-cont">
+                    <div class="acc-man-options">
+                        <div class="acc-man-flex-wrap">
+                            <div class="acc-man-option-wrap">
+                                <i class="fas fa-key"></i><span class="acc-man-options-header" id="changepass-header"></span>
+                            </div>
+                            <div class="acc-man-option-wrap">
+                                <i class="fas fa-language"></i><span class="acc-man-options-header" id="lang-header"></span>
+                            </div>
+                            <div class="acc-man-option-wrap delete-acc-option">
+                                <i class="fas fa-times-circle"></i><span class="acc-man-options-header" id="delete-header"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="acc-man-right-cont">
+                <div class="acc-man-items change-pass-cont">
+                    <div class="change-pass-wrap">
+                        <input type="password" class="change-pass-inp" id="change-pass-old-pass" placeholder="Old Password">
+                        <input type="password" class="change-pass-inp" id="change-pass-new-pass" placeholder="New Password">
+                        <input type="password" class="change-pass-inp" id="change-pass-new-pass-conf" placeholder="Confirm New Password">
+                        <div class="update-pass-error-wrap">
+                            <span id="update-pass-error"></span>
+                        </div>
+                        <button id="acc-update-pass-btn"></button>
+                    </div>
+                </div>
+                <div class="acc-man-items change-lang-cont">
+                    <div class="change-lang-wrap">
+                        <h1 id="lang-title"></h1>
+                        <div class="lang-wrap">
+                            <div class="lang-item-cont">
+                                <div class="lang-icon">
+                                    <img src="https://png.pngtree.com/svg/20150321/0aa8cd2e9d.png">
+                                </div>
+                                <div id="lang-name-en" class="lang-name">
+                                    <span>English</span>
+                                </div>
+                            </div>
+                            <div class="lang-item-cont">
+                                <div class="lang-icon">
+                                    <img src="https://static.thenounproject.com/png/2532298-200.png">
+                                </div>
+                                <div id="lang-name-hi" class="lang-name">
+                                    <span>हिन्दी</span>
+                                </div>
+                            </div>
+                            <button id="lang-submit-btn"></button>
+                            <div class="lang-item-cont"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="acc-man-items delete-acc-cont">Acc</div>
+            </div>
+        </div>
+        <div class="dash-items login-act-cont animated fadeIn faster"></div>
+        <div class="dash-items upload-hist-cont animated fadeIn faster"></div>
     </div>
 </div>
 

@@ -83,12 +83,12 @@ window.onload = () => {
 
     async function updatePass() {
         const password = document.querySelector('#new_password_conf').value;
-        const username = getCook('username')
+        const token = getCook('token');
         const res = await fetch('/updatePass', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                'username': username,
+                'token': token,
                 'password': password
             })
         })
@@ -260,7 +260,7 @@ window.onload = () => {
     }
 
     async function handleEmailAnimation() {
-        console.log('email sending');
+        console.log('sending Email');
         forgotEmailBtn.disabled = true;
         var username = getCook('username');
         document.querySelector('.email-spinner').style.display = 'block';
@@ -275,6 +275,7 @@ window.onload = () => {
             document.querySelector('.email-spinner').style.display = 'none';
             const json_main = await res.json();
             if (json_main.message === "Sent") {
+                document.cookie = `token=${json_main.token}`;
                 animateCSS(forgotBox1, 'slideOutLeft faster', () => {
                     forgotBox1.style.display = 'none';
                     emailBox.style.display = 'flex';

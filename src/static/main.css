@@ -17,6 +17,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Roboto Slab', serif;
 }
 
 .loading-cont {
@@ -103,7 +104,6 @@ body {
     align-self: flex-start;
     justify-self: flex-start;
     color: rgb(18, 1, 255);
-    font-family: 'Roboto Slab', serif;
 }
 
 .login-inp {
@@ -177,7 +177,6 @@ input:focus {
     color: blue;
     font-size: 1.2rem;
     cursor: pointer;
-    font-family: 'Roboto Slab', serif;
 }
 
 #forgot-button {
@@ -191,7 +190,6 @@ input:focus {
     align-items: center;
     width: 100%;
     height: 5%;
-    font-family: 'Roboto Slab', serif;
     color: red;
 }
 
@@ -238,7 +236,6 @@ input:focus {
     text-align: center;
     color: rgb(18, 1, 255);
     border-radius: 10px;
-    font-family: 'Roboto Slab', serif;
 }
 
 .login-spinner-wrap>div>div {
@@ -393,6 +390,8 @@ input:focus {
     height: 100%;
     background: rgba(124, 161, 255, 0.219);
     display: flex;
+    font-family: 'Sen', sans-serif;
+    /* font-family: 'Roboto Slab', serif; */
 }
 
 .nav-wrapper {
@@ -403,7 +402,6 @@ input:focus {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 20% 50% 1fr 10%;
-    font-family: 'Sen', sans-serif;
 }
 
 .dash-cont {
@@ -554,11 +552,6 @@ input:focus {
     background: beige;
 }
 
-.acc-man-cont {
-    display: none;
-    background: black;
-}
-
 .login-act-cont {
     display: none;
     background: brown;
@@ -567,4 +560,262 @@ input:focus {
 .upload-hist-cont {
     display: none;
     background: cornflowerblue;
+}
+
+.acc-man-cont {
+    display: none;
+    grid-template-columns: 30% 1fr;
+    grid-template-rows: 100%;
+    /* background: black; */
+}
+
+.acc-man-left-cont {
+    display: grid;
+    grid-column: 1;
+    grid-template-columns: 100%;
+    grid-template-rows: 20% 1fr;
+}
+
+.dash-items-cont-header-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dash-items-cont-header-wrap {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.dash-items-cont-header-wrap>span {
+    font-size: 2rem;
+    margin-left: 5%;
+    color: blue;
+}
+
+.acc-man-right-cont {
+    grid-column: 2;
+}
+
+.acc-man-options-cont {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+}
+
+.acc-man-options {
+    width: 100%;
+    height: 70%;
+    /* background: red; */
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 10% 1fr 10%;
+    justify-items: center;
+    align-items: flex-start;
+}
+
+.acc-man-option-wrap {
+    grid-column: 2;
+    width: 100%;
+    height: 10%;
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-template-rows: 100%;
+    cursor: pointer;
+}
+
+.selected-option {
+    background: rgba(135, 207, 235, 0.178);
+    border-radius: 20px;
+}
+
+.acc-man-option-wrap>i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1;
+    color: blue;
+    grid-row: 1;
+}
+
+.acc-man-option-wrap>span {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.acc-man-flex-wrap {
+    grid-row: 1;
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.delete-acc-option {
+    background: rgba(255, 0, 0, 0.171);
+    border-radius: 20px;
+}
+
+.delete-acc-option>i {
+    color: red;
+}
+
+.delete-acc-option>span {
+    color: red;
+}
+
+.change-pass-cont,
+.change-lang-cont,
+.delete-acc-cont {
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.change-pass-cont {
+    justify-content: center;
+    align-items: center;
+}
+
+.change-pass-wrap,
+.change-lang-wrap {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.change-pass-wrap>input {
+    border: none;
+    width: 90%;
+    height: 10%;
+    padding: 0 10px 0 10px;
+    background: rgba(255, 255, 255, 0.384);
+    border-radius: 5px;
+}
+
+.update-pass-error-wrap {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-pass-error-wrap>span {
+    color: red;
+}
+
+#acc-update-pass-btn {
+    border: none;
+    padding: 10px 25px 10px 25px;
+    border-radius: 10px;
+    background: rgba(110, 110, 250, 0.418);
+    color: rgb(17, 0, 255);
+    align-self: flex-end;
+    cursor: pointer;
+    transition: background 0.5s, color 0.5s;
+}
+
+#acc-update-pass-btn:focus {
+    outline: none;
+}
+
+#acc-update-pass-btn:disabled {
+    background: rgba(110, 110, 250, 0.048);
+    color: rgba(17, 0, 255, 0.192);
+    transition: background 0.5s, color 0.5s;
+}
+
+.change-lang-wrap>h1 {
+    color: blue;
+}
+
+.lang-wrap {
+    overflow-y: scroll;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lang-item-cont {
+    width: 100%;
+    height: 20%;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 20% 1fr;
+    justify-items: flex-start;
+    align-items: center;
+}
+
+.lang-item-cont>.lang-icon {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lang-name {
+    grid-row: 1;
+    grid-column: 2;
+    height: 60%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.lang-icon>img {
+    width: 40%;
+    height: 40%;
+    pointer-events: none;
+    filter: invert(44%) sepia(58%) saturate(5571%) hue-rotate(191deg) brightness(104%) contrast(101%);
+}
+
+#lang-name-en>span {
+    font-family: 'Sen', sans-serif !important;
+}
+
+#lang-name-hi>span {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.selected-lang {
+    background: rgba(122, 122, 255, 0.274);
+    border-radius: 4px;
+}
+
+#lang-submit-btn {
+    border: none;
+    width: 20%;
+    height: 10%;
+    align-self: flex-end;
+    border-radius: 10px;
+    background: rgba(110, 110, 250, 0.418);
+    color: rgb(17, 0, 255);
+    cursor: pointer;
+    transition: background 0.5s, color 0.5s;
+}
+
+#lang-submit-btn:focus {
+    outline: none;
+}
+
+#lang-submit-btn:disabled {
+    background: rgba(110, 110, 250, 0.048);
+    color: rgba(17, 0, 255, 0.192);
+    transition: background 0.5s, color 0.5s;
 }
