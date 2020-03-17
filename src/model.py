@@ -55,3 +55,26 @@ class UserInfo(db.Model):
             'user_lang': self.user_lang,
             'user_email': self.user_email 
         }
+
+
+class ImgInfo(db.Model):
+    __tablename__ = 'img_info'
+    img_id = db.Column(db.Integer,primary_key = True)
+    user_name = db.Column(db.String(),db.ForeignKey("user_login.user_name", ondelete="CASCADE"))
+    img_create_time = db.Column(db.DateTime(), default=datetime.now())
+    img_delete_time = db.Column(db.DateTime(),default=None)
+    img_link = db.Column(db.String(), unique = True)
+
+
+    def __init__(self, user_name, img_link):
+        self.user_name = user_name
+        self.img_link = img_link
+
+    def serialize(self):
+        return {
+            'img_id': self.img_id,
+            'user_name': self.user_name,
+            'img_create_time': self.img_create_time,
+            'img_delete_time': self.img_delete_time,
+            'img_link': self.img_link
+        }

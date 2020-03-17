@@ -2,6 +2,7 @@ window.onload = () => {
     var updatedLang = "";
 
     {
+
         verifylogin();
         handleLang();
         inactivity_handler();
@@ -9,8 +10,20 @@ window.onload = () => {
         handleSelected(document.querySelector('#default-select'));
         accManNavHander();
         handleUpdatePass();
+        handleDelete();
+        handleFileUpload();
+        handileFileDragNDrop();
+
+        let langElements = document.querySelectorAll('.lang-name');
+        for (var i of langElements) {
+            i.addEventListener('click', handleLangSelect.bind(null, i));
+        }
+
+        let updateLangBtn = document.querySelector('#lang-submit-btn');
+        updateLangBtn.addEventListener('click', handleUpdateLang.bind(null));
 
     }
+
 
     function navhandler(name) {
         document.querySelector('#logo-username').innerHTML = capitalizeFirstLetter(name.sub);
@@ -58,6 +71,7 @@ window.onload = () => {
         contName = contName.id;
         if (contName === 'gallery-header') {
             closeAll();
+            handleGallery();
             document.querySelector('.photos-cont').style.display = 'grid';
         } else if (contName === 'upload-header') {
             closeAll();
@@ -219,7 +233,14 @@ window.onload = () => {
                 'delete-header': 'Delete Account',
                 'acc-update-pass-btn': 'Update',
                 'lang-title': 'Language',
-                'lang-submit-btn': 'Update'
+                'lang-submit-btn': 'Update',
+                'delete-acc-title': 'Delete this account!',
+                'acc-delete-btn': 'Delete',
+                'file-box-text': 'Drag and drop files here or',
+                'upload-click-me': 'click here',
+                'upload-title': 'Upload image:',
+                'photo-title': 'My Photo Gallery'
+
             },
             'hi': {
                 'gallery-header': 'मेरा फ़ोटो',
@@ -234,7 +255,14 @@ window.onload = () => {
                 'delete-header': 'अकाउंट को मिटाएं',
                 'acc-update-pass-btn': 'अपडेट',
                 'lang-title': 'भाषा',
-                'lang-submit-btn': 'अपडेट'
+                'lang-submit-btn': 'अपडेट',
+                'delete-acc-title': 'इस अकाउंट को हटा दें',
+                'acc-delete-btn': 'मिटाएं',
+                'file-box-text': 'फ़ाइलों को यहां खींचें या छोड़ें या',
+                'upload-click-me': 'यहाँ क्लिक करें',
+                'upload-title': 'फोटो अपलोड करें:',
+                'photo-title': 'मेरी फोटो गैलरी'
+
             }
         }
 
@@ -244,12 +272,14 @@ window.onload = () => {
             document.querySelector('#change-pass-old-pass').placeholder = 'पुराना पासवर्ड';
             document.querySelector('#change-pass-new-pass').placeholder = 'नया पासवर्ड';
             document.querySelector('#change-pass-new-pass-conf').placeholder = 'नए पासवर्ड की पुष्टि करें';
+            document.querySelector('#delete-password-inp').placeholder = 'अपना पासवर्ड डालें';
 
         } else if (lang === 'en') {
             document.querySelector('.dash-wrapper').style.fontFamily = `Sen, sans-serif`;
             document.querySelector('#change-pass-old-pass').placeholder = 'Old Password';
             document.querySelector('#change-pass-new-pass').placeholder = 'New Password';
             document.querySelector('#change-pass-new-pass-conf').placeholder = 'Confirm New Password';
+            document.querySelector('#delete-password-inp').placeholder = 'Enter your password';
 
         }
         var obj = langObj[lang];
@@ -265,25 +295,28 @@ window.onload = () => {
         updateLangBtn.disabled = true;
         var langElements = document.querySelectorAll('.lang-name');
         for (var i of langElements) {
-            i.addEventListener('click', handleLangSelect.bind(null, i));
             i.classList.remove('selected-lang');
         }
         document.querySelector(`#lang-name-${currLang}`).classList.add('selected-lang');
 
-        function handleLangSelect(element, updateLang) {
-            for (var i of langElements) {
-                i.classList.remove('selected-lang');
-            }
-            updatedLang = element.id.substring(10, 13);
-            if (updatedLang !== currLang) {
-                updateLangBtn.disabled = false;
-            } else {
-                updateLangBtn.disabled = true;
-            }
+    }
 
-            element.classList.add('selected-lang');
+    function handleLangSelect(element) {
+        var langElements = document.querySelectorAll('.lang-name');
+        var updateLangBtn = document.querySelector('#lang-submit-btn');
+
+        var currLang = getCook('lang');
+        for (var i of langElements) {
+            i.classList.remove('selected-lang');
         }
-        updateLangBtn.addEventListener('click', handleUpdateLang.bind(null));
+        updatedLang = element.id.substring(10, 13);
+        if (updatedLang !== currLang) {
+            updateLangBtn.disabled = false;
+        } else {
+            updateLangBtn.disabled = true;
+        }
+
+        element.classList.add('selected-lang');
     }
 
     async function handleUpdateLang() {
@@ -299,7 +332,6 @@ window.onload = () => {
         if (res.ok) {
             const json_main = await res.json();
             if (json_main.message === "Signature expired. Please log in again." || json_main.message === "Invalid token.") {
-                alert('Logged Out due to invalid token');
                 handleLogout();
             } else {
                 handleLang();
@@ -321,7 +353,8 @@ window.onload = () => {
             const json_main = await res.json();
             if (json_main.message === "Signature expired. Please log in again." || json_main.message === "Invalid token.") {
                 alert('Logged Out due to invalid token');
-                handleLogout();
+                deleteCookies();
+                window.location = '/';
             } else {
                 let token = json_main[1][1].jwtToken;
                 document.cookie = `token=${token}`;
@@ -358,7 +391,7 @@ window.onload = () => {
                 if (json_main.message === "Signature expired. Please log in again." || json_main.message === "Invalid token.") {
                     alert('Expired Token please relogin');
                     deleteCookies();
-                    window.location = '/';
+                    window.location = '/'
                 }
             }
         } else {
@@ -407,7 +440,7 @@ window.onload = () => {
         updateBtn.disabled = true;
         let flag_pass = false;
 
-        oldPass.addEventListener('change', async() => {
+        oldPass.addEventListener('keyup', async() => {
             let token = getCook('token');
             const res = await fetch('/verifyOldPass', {
                 method: 'POST',
@@ -432,19 +465,32 @@ window.onload = () => {
         });
         const newPass1 = document.querySelector('#change-pass-new-pass');
         const newPass2 = document.querySelector('#change-pass-new-pass-conf');
-
+        var lang = getCook('lang');
         newPass1.addEventListener('keyup', verifyPass.bind(null));
         newPass2.addEventListener('keyup', verifyPass.bind(null));
 
         function verifyPass() {
             if (!flag_pass) {
-                error.innerHTML = 'Incorrect Password';
+                if (lang === 'en') {
+                    error.innerHTML = 'Incorrect Password';
+                } else if (lang === 'hi') {
+                    error.innerHTML = 'गलत पासवर्ड ';
+                }
                 updateBtn.disabled = true;
             } else if (newPass1.value !== newPass2.value) {
-                error.innerHTML = 'Passwords do not match';
+                if (lang === 'en') {
+                    error.innerHTML = 'Passwords do not match';
+
+                } else if (lang === 'hi') {
+                    error.innerHTML = 'पासवर्ड एक जैसे नहीं है';
+                }
                 updateBtn.disabled = true;
             } else if (newPass1.value === '' || newPass2.value === '') {
-                error.innerHTML = 'Password fields are empty';
+                if (lang === 'en') {
+                    error.innerHTML = 'Password fields are empty';
+                } else if (lang === 'hi') {
+                    error.innerHTML = 'पासवर्ड खाली हैं';
+                }
                 updateBtn.disabled = true;
             } else {
                 error.innerHTML = '';
@@ -472,7 +518,11 @@ window.onload = () => {
             if (res.ok) {
                 const json_main = await res.json();
                 if (json_main.message === "Changed") {
-                    error.innerHTML = 'Password Updated';
+                    if (lang === 'en') {
+                        error.innerHTML = 'Password Updated';
+                    } else if (lang === 'hi') {
+                        error.innerHTML = 'पासवर्ड अपडेट किया गया';
+                    }
                 } else {
                     error.innerHTML = json_main.message;
                 }
@@ -482,6 +532,8 @@ window.onload = () => {
     }
 
     function clearChangeFields() {
+        const updateBtn = document.querySelector('#acc-update-pass-btn');
+        updateBtn.disabled = true;
         var inps = document.querySelectorAll('.change-pass-inp');
         for (var i of inps) {
             i.value = '';
@@ -490,5 +542,260 @@ window.onload = () => {
         error.innerHTML = '';
     }
 
+    function handleDelete() {
+        var deleteBtn = document.querySelector('#acc-delete-btn');
+        var error = document.querySelector('#error-delete-acc');
+        var lang = getCook('lang');
+        deleteBtn.disabled = true;
+        document.querySelector('#delete-password-inp').addEventListener('keyup', checkPass.bind(null));
+        deleteBtn.addEventListener('click', handleAccountDelete.bind(null));
 
+        async function checkPass() {
+            var pass = document.querySelector('#delete-password-inp').value;
+            let token = getCook('token');
+            const res = await fetch('/verifyOldPass', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    'token': token,
+                    'password': pass
+                })
+            })
+            if (res.ok) {
+                const json_main = await res.json();
+                if (json_main.message === 'PassMatch') {
+                    deleteBtn.disabled = false
+                    if (lang === 'en') {
+                        error.innerHTML = "WARNING! DELETED ACCOUNT CANNOT BE RECOVERED";
+                    } else if (lang === 'hi') {
+                        error.innerHTML = "सावधान! हटाए गए खाते को रद्द नहीं किया जा सकता";
+                    }
+
+                } else {
+                    if (lang === 'en') {
+                        error.innerHTML = "Wrong Password";
+                    } else if (lang === 'hi') {
+                        error.innerHTML = "गलत पासवर्ड";
+                    }
+                    deleteBtn.disabled = true;
+                }
+            }
+
+        }
+
+        async function handleAccountDelete() {
+            let token = getCook('token');
+            const res = await fetch('/deleteAccount', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    'token': token
+                })
+            })
+            if (res.ok) {
+                const json_main = await res.json();
+                if (json_main.message === 'AccountDeleted') {
+                    deleteCookies();
+                    window.location = '/';
+                } else {
+                    alert("ERROR IN DELETING")
+                }
+            }
+        }
+
+    }
+
+    function handileFileDragNDrop() {
+        const fileForm = document.querySelector('.file-border');
+        // const fileBorder = document.querySelector('.file-border');
+        fileForm.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fileForm.classList.add('file-hover');
+            console.log('dragenter')
+        });
+        fileForm.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fileForm.classList.remove('file-hover');
+            console.log('dragleave')
+
+        });
+        fileForm.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        fileForm.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var dt = e.dataTransfer;
+            var filesList = dt.files;
+            const inpFile = document.querySelector('#file');
+            inpFile.files = filesList;
+            handleFileUpload(true);
+
+        });
+
+    }
+
+    function handleFileUpload(dragCheck) {
+        verifylogin();
+        const inpFile = document.querySelector('#file');
+        var token = getCook('token');
+
+        var files = [];
+
+        inpFile.addEventListener('change', handleFile.bind(this));
+
+        if (dragCheck === true) {
+            console.log(inpFile.files);
+            handleFile(inpFile);
+        }
+
+        function handleFile(inp) {
+            files = [];
+            for (var i of inpFile.files) {
+                files.push(i);
+            }
+            handleFileSubmit();
+        }
+
+        async function handleFileSubmit() {
+            const uploadScreen = document.querySelector('.uploading-loading-cont');
+            const uploadText = document.querySelector('#uploading-desc');
+            var lang = getCook('lang');
+            uploadScreen.style.opacity = '0';
+            uploadScreen.style.display = 'flex';
+
+
+
+            animateCSS(uploadScreen, 'fadeIn', () => {
+                uploadScreen.style.opacity = '1';
+            });
+
+            var uploadedFlag = new Array(files.length);
+
+            for (var k = 0; k < files.length; k++) {
+                uploadedFlag[k] = false;
+            }
+
+            var j = 0;
+            countUploading(0);
+            for (var i of files) {
+
+                var fileName = i.name;
+                var fileNameTemp = fileName.substr(0, fileName.lastIndexOf('.')) || fileName;
+                var fileExtenstion = fileName.substr(fileName.lastIndexOf('.')) || fileName;
+                var fileName = fileNameTemp + '_' + parseJwt(getCook('token')).sub + fileExtenstion;
+
+
+                const res = await fetch('/getSig', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        'token': token,
+                        'fileName': fileName,
+                        'fileType': i.type
+                    })
+                })
+                if (res.ok) {
+                    const json_main = await res.json();
+                    if (json_main) {
+                        uploadToS3(i, json_main.data, json_main.url, j);
+                    }
+                }
+
+                j++;
+            }
+
+            function countUploading(j) {
+                if (lang === 'en') {
+                    uploadText.innerHTML = `Uploading ${j+1} of ${files.length}, please wait`;
+                } else if (lang === 'hi') {
+                    uploadText.innerHTML = `${file.length} में से ${j+1} अपलोड कर रहा है, कृपया प्रतीक्षा करें`;
+
+                }
+            }
+
+            async function uploadToS3(file, s3Data, fileurl, j) {
+                var postData = new FormData();
+                for (key in s3Data.fields) {
+                    postData.append(key, s3Data.fields[key]);
+                }
+                postData.append('file', file);
+                const res = await fetch(s3Data.url, {
+                    method: 'POST',
+                    body: postData
+                })
+                if (res.ok) {
+                    uploadedFlag[j] = true;
+                    if (j + 1 <= file.length)
+                        countUploading(j + 1);
+
+                    handleUpdateFileDb(fileurl);
+                    console.log('uploaded');
+                }
+            }
+
+            async function handleUpdateFileDb(fileUrl) {
+                let token = getCook('token');
+                const res = await fetch('/updateFileDb', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        'token': token,
+                        'url': fileUrl
+                    })
+                });
+            }
+
+            var intervalCheckFlag = setInterval(() => {
+                for (var k = 0; k < files.length; k++) {
+                    if (uploadedFlag[k] === false) {
+                        break;
+                    }
+                    if (k === files.length - 1) {
+                        animateCSS(uploadScreen, 'fadeOut', () => {
+                            uploadScreen.style.display = 'none';
+                            clearInterval(intervalCheckFlag);
+                            const fileBorder = document.querySelector('.file-border');
+                            fileBorder.classList.remove('file-hover');
+                            files = [];
+                        });
+                    }
+                }
+
+            }, 500);
+
+        }
+
+    }
+
+    async function handleGallery() {
+        verifylogin();
+        var token = getCook('token');
+        const res = await fetch('/getUserImages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                'token': token
+            })
+        })
+        if (res.ok) {
+            const json_main = await res.json();
+            imgArray = json_main.message;
+            const photoBox = document.querySelector('.photo-box');
+            photoBox.innerHTML = '';
+            imgArray.forEach(e => {
+                console.log(e.img_link);
+                photoBox.innerHTML += `
+                <div class="photo-wrap">
+                        <img src="${e.img_link}" alt="">
+                </div>
+                `;
+            });
+        }
+
+
+    }
 }

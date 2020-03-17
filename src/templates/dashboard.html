@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="nav-main-wrap">
-            <div class="navitem-cont unfocus-nav-item">
+            <div id="default-select" class="navitem-cont unfocus-nav-item">
                 <div class="hightlight-container"></div>
                 <div class="selected-container"></div>
                 <div class="nav-item-i-wrap">
@@ -28,7 +28,7 @@
                     <i class="fas fa-upload"></i><span class="nav-header" id="upload-header"></span>
                 </div>
             </div>
-            <div id="default-select" class="navitem-cont unfocus-nav-item">
+            <div class="navitem-cont unfocus-nav-item">
                 <div class="hightlight-container"></div>
                 <div class="selected-container"></div>
                 <div class="nav-item-i-wrap">
@@ -61,9 +61,46 @@
         </div>
     </div>
     <div class="dash-cont">
-        <div class="dash-items photos-cont animated fadeIn faster"></div>
-        <div class="dash-items upload-cont animated fadeIn faster"></div>
-        <div class="dash-items acc-man-cont animated fadeIn faster">
+        <div class="dash-items photos-cont animated fadeIn">
+            <div class="photos-cont-wrap">
+                <h1 id="photo-title"></h1>
+                <div class="photo-box">
+                </div>
+            </div>
+        </div>
+        <div class="dash-items upload-cont animated fadeIn">
+            <div class="upload-header-wrap">
+                <h1 id="upload-title"></h1>
+                <div class="upload-box">
+                    <div class="file-box-wrap">
+                        <div class="file-border">
+                            <span class="dashing"><i></i></span>
+                            <span class="dashing dash-sides"><i></i></span>
+                            <span class="dashing"><i></i></span>
+                            <span class="dashing dash-sides"><i></i></span>
+                            <form class="file-upload-form">
+                                <div class="file-box">
+                                    <div class="file-box-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </div>
+                                    <div class="file-box-text-wrap">
+                                        <span id="file-box-text"></span>&nbsp<label id="file-label" for="file"><span id="upload-click-me"></span></label>
+                                    </div>
+                                </div>
+                                <input type="file" id="file" name="file" class="fileinp" multiple>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="uploading-loading-cont">
+                        <div class="loader"></div>
+                        <h1 id="uploading-desc"></h1>
+                    </div>
+                    <div class="progress-wrap"></div>
+                    <div class="button-wrap"></div>
+                </div>
+            </div>
+        </div>
+        <div class="dash-items acc-man-cont animated fadeIn">
 
             <div class="acc-man-left-cont">
                 <div class="dash-items-cont-header-wrap">
@@ -87,7 +124,7 @@
             </div>
             <div class="acc-man-right-cont">
                 <div class="acc-man-items change-pass-cont">
-                    <div class="change-pass-wrap">
+                    <div class="change-pass-wrap animated fadeIn fast">
                         <input type="password" class="change-pass-inp" id="change-pass-old-pass" placeholder="Old Password">
                         <input type="password" class="change-pass-inp" id="change-pass-new-pass" placeholder="New Password">
                         <input type="password" class="change-pass-inp" id="change-pass-new-pass-conf" placeholder="Confirm New Password">
@@ -98,7 +135,7 @@
                     </div>
                 </div>
                 <div class="acc-man-items change-lang-cont">
-                    <div class="change-lang-wrap">
+                    <div class="change-lang-wrap animated fadeIn fast">
                         <h1 id="lang-title"></h1>
                         <div class="lang-wrap">
                             <div class="lang-item-cont">
@@ -122,11 +159,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="acc-man-items delete-acc-cont">Acc</div>
+                <div class="acc-man-items delete-acc-cont">
+                    <div class="acc-delete-wrap animated fadeIn fast">
+                        <h1 id="delete-acc-title"></h1>
+                        <div class="delete-wrap">
+                            <input type="password" id="delete-password-inp">
+                            <span id="error-delete-acc"></span>
+                            <button id="acc-delete-btn"></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="dash-items login-act-cont animated fadeIn faster"></div>
-        <div class="dash-items upload-hist-cont animated fadeIn faster"></div>
+        <div class="dash-items login-act-cont animated fadeIn"></div>
+        <div class="dash-items upload-hist-cont animated fadeIn"></div>
     </div>
 </div>
 

@@ -1,7 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, jsonify
 
 import random
-import requests
 import json
 from random import seed
 
@@ -27,7 +26,6 @@ email_code = dict()
 
 def get_jwt(username):
     try:
-        print(datetime.datetime.utcnow())
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=360),
             'sub': username
@@ -148,7 +146,6 @@ def handle_username_verification():
    
 @main.route('/sendCode',methods=['POST'])
 def send_code():
-    print(email_code)
     values = request.get_json()
     result = UserInfo.query.filter(UserInfo.user_name == values['username']).first()
     email = result.user_email
@@ -223,6 +220,16 @@ def update_lang():
     result.user_lang = lang 
     db.session.commit()
     response = {'message': 'LangChanged'}
+    return jsonify(response),201
+
+@main.route('/deleteAccount',methods=['POST'])
+def delete_acc():
+    values = request.get_json()
+    username = decode_jwt(values['token'].encode('utf-8'))
+    result = UserLogin.query.filter(UserLogin.user_name == username).first()
+    db.session.delete(result)
+    db.session.commit()
+    response = {'message': 'AccountDeleted'}
     return jsonify(response),201
 
     
