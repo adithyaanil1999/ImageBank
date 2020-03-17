@@ -3,7 +3,8 @@ from flask import Flask, Blueprint, render_template, request, jsonify
 import requests
 import json
 import boto3
-
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 from src.model import UserLogin,UserInfo,LoginActivity,ImgInfo
 from src.extensions import db,mail
 from src.routes.main import get_jwt,decode_jwt
@@ -21,9 +22,12 @@ def get_sig():
     S3_BUCKET = "flask-imagebank"
     file_name = values['fileName']
     file_type = values['fileType']
-    print(file_type)
 
-    s3 = boto3.client('s3',aws_access_key_id="AKIAW37L4VA5EDH3VGF6",aws_secret_access_key="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")
+    aws_id = os.environ['AWS_ID']
+    aws_key = os.environ['AWS_KEY']
+    print(aws_id)
+
+    s3 = boto3.client('s3',aws_access_key_id=aws_id,aws_secret_access_key=aws_key)
 
     presigned_post = s3.generate_presigned_post(
         Bucket = S3_BUCKET,
@@ -40,6 +44,8 @@ def get_sig():
         'data': presigned_post,
         'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
     })
+
+
 
 @img.route('/updateFileDb', methods=['POST'])
 def file_update_db():

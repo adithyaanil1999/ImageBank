@@ -787,13 +787,22 @@ window.onload = () => {
             const photoBox = document.querySelector('.photo-box');
             photoBox.innerHTML = '';
             imgArray.forEach(e => {
-                console.log(e.img_link);
                 photoBox.innerHTML += `
                 <div class="photo-wrap">
                         <img src="${e.img_link}" alt="">
                 </div>
                 `;
             });
+            const photoCont = document.querySelectorAll('.photo-wrap');
+
+            photoCont.forEach(e => {
+                e.addEventListener('click', handlePhotoViewer.bind(null, e));
+            })
+        }
+
+        function handlePhotoViewer(e) {
+            console.log('here')
+            console.log(e);
         }
 
 
